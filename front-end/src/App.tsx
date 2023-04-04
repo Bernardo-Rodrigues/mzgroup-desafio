@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+  const [file, setFile] = useState('');
+
+  const handleFileInputChange = (event: any) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleFormSubmit = (event: any) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    axios.post('http://localhost:3000/api/upload', formData)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={handleFormSubmit} encType="multipart/form-data">
+      <div>
+        <input type="file" name="file" onChange={handleFileInputChange} />
+      </div>
+      <div>
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
   );
 }
 
