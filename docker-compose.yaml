@@ -3,6 +3,7 @@ version: '3'
 services:
   postgres:
     image: postgres
+    container_name: desafio-postgres
     restart: always
     environment:
       POSTGRES_USER: myuser
@@ -11,8 +12,9 @@ services:
 
   backend:
     build:
-      context: ./back-end
-      dockerfile: ./docker/Dockerfile.backend
+      context: .
+      dockerfile: ./back-end/Dockerfile
+    container_name: desafio-backend
     restart: always
     ports:
       - '3000:3000'
@@ -26,8 +28,9 @@ services:
 
   frontend:
     build:
-      context: ./front-end
-      dockerfile: ./docker/Dockerfile.frontend
+      context: .
+      dockerfile: ./front-end/Dockerfile
+    container_name: desafio-frontend
     restart: always
     ports:
       - '4000:4000'
@@ -35,3 +38,4 @@ services:
       - backend
     environment:
       REACT_APP_API_URL: http://backend:3000
+      PORT: 4000

@@ -1,7 +1,7 @@
 FROM node:latest
 WORKDIR /app
-COPY package*.json ./
+COPY ./back-end/package*.json .
 RUN npm install
 COPY ./back-end .
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

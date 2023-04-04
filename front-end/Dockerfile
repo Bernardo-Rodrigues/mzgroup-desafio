@@ -1,6 +1,6 @@
 FROM node:latest
 WORKDIR /app
-COPY package*.json ./
+COPY ./front-end/package*.json /app
 RUN npm install
 COPY ./front-end .
 RUN npm run build
